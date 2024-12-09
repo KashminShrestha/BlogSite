@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="\stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+
+    {% block title%} {% endblock title%}
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            {% if user.is_authenticated %}
+            <p>Hi {{ user.username }}!</p>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+            {% else %}
+            <h2>
+                <a href="{% url 'login' %}">login</a>
+            </h2>
+            {% endif %}
+            <div class="nav-left">
+                <h1><a href="/">Django blog</a></h1>
+            </div>
+            <div class="nav-right">
+                <a href="{% url 'post_new' %}">+ New Blog Post</a>
+            </div>
+        </header>
+        {% block content %} {% endblock content %}
+    </div>
+</body>
+
+</html>
